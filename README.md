@@ -16,4 +16,4 @@ Overall, this project will demonstrate the power and potential of cloud computin
 </p>
 
 ## Cloud Schema
-![image](https://drive.google.com/file/d/1ET4n_aSKpkKya7bXlNMbbgPIChk3bxnO/view?usp=share_link)
+![image](/images/phishing_architect.png)
