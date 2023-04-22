@@ -1,4 +1,4 @@
-# Cloud-Engineering Project: Webpage Phishing Detection
+# MSiA 423 Cloud Engineering Project: Webpage Phishing Detection
 
 ## Dataset
 https://www.kaggle.com/datasets/shashwatwork/web-page-phishing-detection-dataset
