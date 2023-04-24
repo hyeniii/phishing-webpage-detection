@@ -1,0 +1,3 @@
+EDA:
+  dataset:
+    path: "../data/dataset_phishing.csv"
