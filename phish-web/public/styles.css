@@ -1,0 +1,57 @@
+body {
+    background: #F5F5F5;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+    padding: 0 16px;
+  }
+
+html {
+    font-family: "Montserrat", sans-serif;
+}
+
+footer {
+    display:flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
+  
+  footer p {
+    color: #757474;
+  }
+
+.MuiAppBar-root.appbar {
+    background-color: #333333;
+}
+
+.typography-h6 {
+    font-family: monospace;
+    letter-spacing: 0.3rem;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+    margin-right: 16px;
+  }
+  
+  .typography-h5 {
+    font-family: monospace;
+    flex-grow: 1;
+    font-weight: 700;
+    letter-spacing: .3rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+  }
+
+  .MuiButton-root.main-button {
+    background-color: #333333;
+    size: large;
+  }
