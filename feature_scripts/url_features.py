@@ -7,7 +7,7 @@ import re
 #LOCALHOST_PATH = "/var/www/html/"
 HINTS = ['wp', 'login', 'includes', 'admin', 'content', 'site', 'images', 'js', 'alibaba', 'css', 'myaccount', 'dropbox', 'themes', 'plugins', 'signin', 'view']
 
-#allbrand_txt = open("allbrands.txt", "r")
+allbrand_txt = open("./allbrands.txt", "r")
 
 def __txt_to_list(txt_object):
     list = []
@@ -316,11 +316,18 @@ def count_external_redirection(page, domain):
 #               Is the registered domain created with random characters (Sahingoz2019)
 #################################################################################################################################
 
-from word_with_nlp import nlp_class
+#from word_with_nlp import nlp_class
+
+from nostril import nonsense
 
 def random_domain(domain):
-        nlp_manager = nlp_class()
-        return nlp_manager.check_word_random(domain)
+    if nonsense(domain):
+        return 1
+    else:
+        return 0
+
+        #nlp_manager = nlp_class()
+        #return nlp_manager.check_word_random(domain)
     
 #################################################################################################################################
 #               Consecutive Character Repeat (Sahingoz2019)
