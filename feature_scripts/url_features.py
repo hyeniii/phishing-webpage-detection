@@ -17,7 +17,7 @@ def __txt_to_list(txt_object):
     return list
 
 allbrand = __txt_to_list(allbrand_txt)
-print(allbrand)
+#print(allbrand)
 
 #################################################################################################################################
 #               Having IP address in hostname
