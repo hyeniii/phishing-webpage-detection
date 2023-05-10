@@ -10,7 +10,7 @@ import src.aws_utils as aws
 
 #import src.evaluate_performance as ep
 import src.generate_features as gf
-import src.process_dataset as pd
+import src.process_dataset as prd
 #import src.score_model as sm
 import src.train_model as tm
 
@@ -32,10 +32,8 @@ if __name__ == "__main__":
             config = yaml.load(f, Loader=yaml.FullLoader)
         except yaml.error.YAMLError as e:
             logger.error("Error while loading configuration from %s", args.config)
-            pass
         else:
             logger.info("Configuration file loaded from %s", args.config)
-            pass
 
     run_config = config.get("run_config", {})
 
@@ -51,8 +49,11 @@ if __name__ == "__main__":
     # Acquire data from s3 bucket and save to disk
     df = ld.load_data(config["aws"])
 
-    print(df.head())
-
+    # Process data; save to disk
+    df = prd.process_data(df, config["process_data"])
+  
+    #
+    
     # # Create structured dataset from raw data; save to disk
     # data = cd.create_dataset(artifacts / "clouds.data", config["create_dataset"])
     # cd.save_dataset(data, artifacts / "clouds.csv")

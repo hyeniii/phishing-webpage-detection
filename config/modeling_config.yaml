@@ -10,4 +10,27 @@ aws:
   upload: false
   bucket_name: phishing-project
   file_key: data/dataset_phishing.csv
+
+process_data:
+  drop_columns:
+    - url
+    - nb_or
+    - ratio_nullHyperlinks
+    - ratio_intErrors
+    - ratio_intRedirection
+    - submit_email
+    - sfh
+  drop_duplicates: true
+  drop_na: true
+  correlated_columns: 
+    - ratio_extHyperlinks
+    - longest_words_raw
+  external_features:
+    - whois_registered_domain
+    - domain_registration_length
+    - domain_age
+    - web_traffic
+    - dns_record
+    - google_index
+    - page_rank
   
