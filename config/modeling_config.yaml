@@ -7,9 +7,10 @@ run_config:
   output: artifacts
 
 aws:
-  upload: false
+  upload: True
   bucket_name: phishing-project
   file_key: data/dataset_phishing.csv
+  prefix: artifacts/
 
 process_data:
   drop_columns:
@@ -33,4 +34,24 @@ process_data:
     - dns_record
     - google_index
     - page_rank
+  status_mapping:
+    legitimate: 0
+    phishing: 1
   
+generate_features:
+  standardize_prefix: "nb_"
+  standardize_by: "length_url"
+
+train_model:
+  split:
+    test_size: 0.2
+    random_state: 373
+  RandomForest:
+    n_estimators: 1000
+    min_samples_split: 5
+    max_depth: ~
+    random_state: 373
+  XGBoost:
+    n_estimators: 500
+    learning_rate: 0.1
+    max_depth: 9
