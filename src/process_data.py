@@ -13,7 +13,7 @@ def process_data(df: pd.DataFrame, config: Dict[str, list]) -> pd.DataFrame:
         df (pd.DataFrame): The input dataframe to be processed.
         config (Dict[str, list]): A dictionary with processing details. 
         It must include 'drop_columns', 'drop_duplicates', 'drop_na', 
-        'drop_columns_correlated' and 'drop_external_features' keys.
+        'drop_columns_correlated', 'drop_external_features' and 'status_mapping' keys.
         
     Returns:
         pd.DataFrame: The processed dataframe.
@@ -35,9 +35,14 @@ def process_data(df: pd.DataFrame, config: Dict[str, list]) -> pd.DataFrame:
         
         # Drop external features
         df = df.drop(columns=config["external_features"])
-        logging.info("Successfully processed data.")
+
+        # Map 'status' column to 0 and 1
+        status_mapping = config["status_mapping"]
+        df['status'] = df['status'].map(status_mapping)
+        
+        logger.info("Successfully processed data.")
     except Exception as e:
-        logging.error(f"Error occurred while processing data. Error: {e}")
+        logger.error(f"Error occurred while processing data. Error: {e}")
         raise e
 
     return df
