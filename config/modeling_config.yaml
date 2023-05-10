@@ -1,0 +1,13 @@
+run_config:
+  name: phishing-detection-project
+  author: MSiA 423 Group 1
+  version: default
+  description: Classifies urls into phishing or legitimate webpages.
+  dependencies: requirements.txt
+  output: artifacts
+
+aws:
+  upload: false
+  bucket_name: phishing-project
+  file_key: data/dataset_phishing.csv
+  
