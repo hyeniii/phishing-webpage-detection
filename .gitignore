@@ -109,4 +109,4 @@ ENV/
 phish/
 
 # Model artifacts
-modeling/artifacts/
+phish-modeling/artifacts/
