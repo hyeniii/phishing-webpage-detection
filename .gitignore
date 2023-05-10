@@ -104,3 +104,6 @@ ENV/
 
 #DS_store
 .DS_Store
+
+# Virtual environment
+phish/
