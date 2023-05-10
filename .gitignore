@@ -107,4 +107,6 @@ ENV/
 
 # Virtual environment
 phish/
-artifacts/
+
+# Model artifacts
+modeling/artifacts/

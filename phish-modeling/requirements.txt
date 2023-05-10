@@ -1,0 +1,9 @@
+pyyaml==6.0
+matplotlib==3.7.1
+numpy==1.21.3 
+pandas==2.0.1
+scikit-learn==1.2.2
+xgboost==1.7.5
+seaborn==0.12.2
+boto3==1.26.131
+fsspec==2023.5.0

@@ -1,0 +1,53 @@
+aws:
+  bucket_name: phishing-project
+  file_key: data/dataset_phishing.csv
+  prefix: artifacts/
+  upload: true
+generate_features:
+  standardize_by: length_url
+  standardize_prefix: nb_
+process_data:
+  correlated_columns:
+  - ratio_extHyperlinks
+  - longest_words_raw
+  drop_columns:
+  - url
+  - nb_or
+  - ratio_nullHyperlinks
+  - ratio_intErrors
+  - ratio_intRedirection
+  - submit_email
+  - sfh
+  drop_duplicates: true
+  drop_na: true
+  external_features:
+  - whois_registered_domain
+  - domain_registration_length
+  - domain_age
+  - web_traffic
+  - dns_record
+  - google_index
+  - page_rank
+  status_mapping:
+    legitimate: 0
+    phishing: 1
+run_config:
+  author: MSiA 423 Group 1
+  dependencies: requirements.txt
+  description: Classifies urls into phishing or legitimate webpages.
+  name: phishing-detection-project
+  output: artifacts
+  version: default
+train_model:
+  RandomForest:
+    max_depth: null
+    min_samples_split: 5
+    n_estimators: 1000
+    random_state: 373
+  XGBoost:
+    learning_rate: 0.1
+    max_depth: 9
+    n_estimators: 500
+  split:
+    random_state: 373
+    test_size: 0.2
