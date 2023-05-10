@@ -17,13 +17,15 @@ with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 # Access variables
-url = config['url']
-status = config['status']
+urls = config['url']
 headers = config['headers']
-
-row = extract_features(url, status)
-#print(row)
-
+count = 0
 data = pd.DataFrame(columns=headers)
-data.loc[0] = row
+
+for u in urls:
+    row = extract_features(u['url'], u['status'])
+    #print(row)
+    data.loc[count] = row
+    count+=1
+
 data.to_csv('data.csv',index=False)
