@@ -104,3 +104,9 @@ ENV/
 
 #DS_store
 .DS_Store
+
+# Virtual environment
+phish/
+
+# Model artifacts
+phish-modeling/artifacts/
