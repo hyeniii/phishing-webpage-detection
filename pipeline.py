@@ -5,13 +5,11 @@ from pathlib import Path
 
 import yaml
 
-import src.load_data as ld
 import src.aws_utils as aws
-
-#import src.evaluate_performance as ep
 import src.generate_features as gf
-import src.process_dataset as prd
-#import src.score_model as sm
+import src.load_data as ld
+import src.process_data as prd
+import src.save_data as sd
 import src.train_model as tm
 
 logging.config.fileConfig("config/logging/local.conf")
@@ -46,43 +44,26 @@ if __name__ == "__main__":
     with (artifacts / "config.yaml").open("w") as f:
         yaml.dump(config, f)
 
-    # Acquire data from s3 bucket and save to disk
+    # Acquire data from S3 bucket
     df = ld.load_data(config["aws"])
 
-    # Process data; save to disk
+    # Process data
     df = prd.process_data(df, config["process_data"])
   
-    #
+    # Generate features; save to disk
+    df = gf.generate_features(df, config["generate_features"])
+    sd.save_data(df, artifacts / "phish_ready.csv")
     
-    # # Create structured dataset from raw data; save to disk
-    # data = cd.create_dataset(artifacts / "clouds.data", config["create_dataset"])
-    # cd.save_dataset(data, artifacts / "clouds.csv")
+    # Split data into train/test set and train models based on config; save each to disk
+    rf, train, test = tm.train_model(df, config["train_model"], "RandomForest")
+    xgb = (tm.train_model(df, config["train_model"], "XGBoost"))[0]
+    tm.save_split(train, test, artifacts)
+    tm.save_model(rf, artifacts / "rf_trained.pkl")
+    tm.save_model(xgb, artifacts / "xgb_trained.pkl")
 
-    # # Enrich dataset with features for model training; save to disk
-    # features = gf.generate_features(data, config["generate_features"])
-    # cd.save_dataset(features, artifacts / "features.csv")
-
-    # # Generate statistics and visualizations for summarizing the data; save to disk
-    # figures = artifacts / "figures"
-    # figures.mkdir()
-    # eda.save_figures(features, figures)
-
-    # # Split data into train/test set and train model based on config; save each to disk
-    # tmo, train, test = tm.train_model(features, config["train_model"])
-    # tm.save_data(train, test, artifacts)
-    # tm.save_model(tmo, artifacts / "trained_model_object.pkl")
-
-    # # Score model on test set; save scores to disk
-    # scores = sm.score_model(test, tmo, config["score_model"])
-    # sm.save_scores(scores, artifacts / "scores.csv")
-
-    # # Evaluate model performance metrics; save metrics to disk
-    # metrics = ep.evaluate_performance(scores, test, config["evaluate_performance"])
-    # ep.save_metrics(metrics, artifacts / "metrics.yaml")
-
-    # # Upload all artifacts to S3
-    # aws_config = config.get("aws")
-    # if aws_config.get("upload", False):
-    #     aws.upload_artifacts(artifacts, aws_config)
-    # else:
-    #     logger.info("Not uploading any files to S3. To upload, change upload in aws config")
+    # Upload all artifacts to S3
+    aws_config = config.get("aws")
+    if aws_config.get("upload", False):
+        aws.upload_artifacts(artifacts, aws_config)
+    else:
+        logger.info("Not uploading any files to S3. To upload, change upload in aws config")
