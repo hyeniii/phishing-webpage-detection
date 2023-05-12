@@ -2,12 +2,13 @@
 # 1 stands for phishing
 
 import re
+import os
 
 
 #LOCALHOST_PATH = "/var/www/html/"
 HINTS = ['wp', 'login', 'includes', 'admin', 'content', 'site', 'images', 'js', 'alibaba', 'css', 'myaccount', 'dropbox', 'themes', 'plugins', 'signin', 'view']
-
-allbrand_txt = open("./allbrands.txt", "r")
+print(os.getcwd())
+allbrand_txt = open("./src/allbrands.txt", "r")
 
 def __txt_to_list(txt_object):
     list = []
@@ -318,7 +319,7 @@ def count_external_redirection(page, domain):
 
 #from word_with_nlp import nlp_class
 
-from nostril import nonsense
+from nostril.nonsense_detector import nonsense
 
 def random_domain(domain):
     if nonsense(domain):

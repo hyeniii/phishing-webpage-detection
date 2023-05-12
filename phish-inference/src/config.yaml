@@ -2,6 +2,9 @@ urls:
   url1:
     url: https://www.chiefarchitect.com/
     status: legitimate
+  url2:
+    url: https:google.com/
+    status: legitmate
 
 headers:
   - 'url'

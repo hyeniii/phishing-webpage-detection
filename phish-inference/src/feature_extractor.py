@@ -6,8 +6,8 @@ Created on Thu May 14 13:23:31 2020
 @author: hannousse
 """
 
-import content_features as ctnfe
-import url_features as urlfe
+import src.content_features as ctnfe
+import src.url_features as urlfe
 import urllib.parse
 import tldextract
 import requests

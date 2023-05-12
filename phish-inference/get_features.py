@@ -10,10 +10,10 @@ Created on Thu May  4 13:59:49 2023
 #################################################################################################################################
 import pandas as pd
 import yaml
-from feature_extractor import extract_features
+from src.feature_extractor import extract_features
 
 # Load config file
-with open('config.yaml', 'r') as f:
+with open('/src/config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 # Access variables
