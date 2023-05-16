@@ -4,13 +4,13 @@ from src.feature_extractor import extract_features
 from src.generate_features import generate_features
 from src.load_model import load_model
 
-input_url = "https://www.facebook.com/"
+# Load config file
+with open('./src/config.yaml', 'r') as f:
+    config = yaml.safe_load(f)
+
+input_url = config["url"]
 
 def inference(url):
-    
-    # Load config file
-    with open('./src/config.yaml', 'r') as f:
-        config = yaml.safe_load(f)
 
     # Access variables
     headers = config['headers']
