@@ -2,6 +2,9 @@ urls:
   url1:
     url: https://www.chiefarchitect.com/
     status: legitimate
+  url2:
+    url: https://www.facebook.com/
+    status: legitmate
 
 headers:
   - 'url'
@@ -42,7 +45,6 @@ headers:
   - 'random_domain'
   - 'shortening_service'
   - 'path_extension'
-  
   - 'nb_redirection'
   - 'nb_external_redirection'
   - 'length_words_raw'
@@ -87,3 +89,12 @@ headers:
   - 'domain_in_title'
   - 'domain_with_copyright'
   - 'status'
+
+generate_features:
+  standardize_prefix: "nb_"
+  standardize_by: "length_url"
+
+aws:
+  bucket_name: phishing-project
+  file_key: artifacts/xgb_trained.pkl
+  prefix: artifacts/

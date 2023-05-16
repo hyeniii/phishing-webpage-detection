@@ -1,8 +1,0 @@
-pandas
-nostril
-Levenshtein
-requests
-tldextract
-urllib
-beautifulsoup4
-pyyaml
