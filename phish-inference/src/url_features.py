@@ -7,8 +7,7 @@ import os
 
 #LOCALHOST_PATH = "/var/www/html/"
 HINTS = ['wp', 'login', 'includes', 'admin', 'content', 'site', 'images', 'js', 'alibaba', 'css', 'myaccount', 'dropbox', 'themes', 'plugins', 'signin', 'view']
-print(os.getcwd())
-allbrand_txt = open("./src/allbrands.txt", "r")
+allbrand_txt = open("./phish-inference/src/allbrands.txt", "r")
 
 def __txt_to_list(txt_object):
     list = []
