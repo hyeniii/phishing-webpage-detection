@@ -31,11 +31,22 @@ def upload_artifacts(artifacts: Path, config: dict) -> List[str]:
 
     bucket = config["bucket_name"]
     s3_urls = []
-    prefix = config["prefix"]
 
     for root, _, files in os.walk(artifacts):
         for file in files:
             local_path = os.path.join(root, file)
+            
+            if file.endswith(".csv"):
+                prefix = config["data_prefix"]
+            elif file.endswith(".yaml"):
+                prefix = config["config_prefix"]
+            elif file.endswith(".pkl"):
+                prefix = config["model_prefix"]
+            elif file.endswith(".png"):
+                prefix = config["visuals_prefix"]
+            else:
+                prefix = config["prefix"]
+
             s3_key = os.path.join(prefix, os.path.relpath(local_path, artifacts))
 
             try:
