@@ -7,7 +7,7 @@ run_config:
   output: artifacts
 
 aws:
-  upload: False
+  upload: True
   bucket_name: phishing-project
   file_key: data/dataset_phishing.csv
   prefix: artifacts/
