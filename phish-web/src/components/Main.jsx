@@ -18,7 +18,7 @@ function Main() {
     const urlJsonString = encodeURIComponent(JSON.stringify(urlJson));
 
     try {
-      const response = await fetch("FAST_API_SERVER_URL/predict", {
+      const response = await fetch("https://d4a7leuot6.execute-api.us-east-2.amazonaws.com/default/phish-inference", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -30,7 +30,6 @@ function Main() {
         navigate(`/predict?data=${urlJsonString}`, {state: {predictionData: data}});
       } else {
         console.error("Error while fetching predition:", response.status)
-        navigate(`/predict?data=${urlJsonString}`); // DELETE AFTER FAST-API IMPLEMENTATION!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
     } catch (error) {
       console.error("Error:", error)
