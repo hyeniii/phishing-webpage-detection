@@ -42,7 +42,7 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         conf_matrix = confusion_matrix(y_true, y_pred)
         fig, ax = plt.subplots()
         sns.heatmap(conf_matrix, annot=True, fmt='d', ax=ax, cmap=plt.cm.Blues, cbar=False)
-        ax.set(xlabel="Predicted", ylabel="True", title="Confusion matrix")
+        ax.set(xlabel="Predicted", ylabel="True", title="Confusion Matrix")
         plt.savefig(str(visuals_dir / config["confusion_matrix_filename"]))
         plt.close()
 
@@ -50,6 +50,7 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         logger.info("Generating classification report...")
         report = classification_report(y_true, y_pred, output_dict=True)
         df_report = pd.DataFrame(report).transpose()
+        df_report = df_report.loc[["0", "1"], ["precision", "recall", "f1-score"]]
         fig, ax = plt.subplots()
         ax.axis("tight")
         ax.axis("off")
