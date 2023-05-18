@@ -48,14 +48,14 @@ def train_model(df: pd.DataFrame, config: Dict) -> Tuple[object, pd.DataFrame, p
             grid_search.fit(X_train, y_train)
 
             logger.info(f"Best parameters for {name}: {grid_search.best_params_}")
-            logger.info(f"Best cross-validation accuracy for {name}: {grid_search.best_score_}")
+            logger.info(f"Best cross-validation accuracy for {name}: {round(grid_search.best_score_, 3)}")
 
             if grid_search.best_score_ > highest_accuracy:
                 best_model = grid_search.best_estimator_
                 highest_accuracy = grid_search.best_score_
         
         best_model.fit(X_train, y_train)
-        logger.info(f"Best model: {type(best_model).__name__}")
+        logger.info(f"Best trained model: {type(best_model).__name__}")
 
         return best_model, df_train, df_validation, df_test
 
