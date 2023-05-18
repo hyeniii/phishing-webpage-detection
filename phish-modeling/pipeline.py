@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # Generate model performance metric visualizations on validation and save each to disk
     vr.visualize_results(model, validation, artifacts, config["visualize_results"])
 
-    # Upload all artifacts to S3
+    # Upload all artifacts to S3 with nested directories
     aws_config = config.get("aws")
     if aws_config.get("upload", False):
         aws.upload_artifacts(artifacts, aws_config)
