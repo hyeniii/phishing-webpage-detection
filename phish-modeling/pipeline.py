@@ -54,7 +54,7 @@ if __name__ == "__main__":
     df = gf.generate_features(df, config["generate_features"])
     sd.save_data(df, artifacts / "phish_ready.csv")
     
-    # Split data into train/test set and train models based on config; save each to disk
+    # Split data into train/test set and train model based on cross-validation results; save each to disk
     model, train, validation, test = tm.train_model(df, config["train_model"])
     tm.save_split(train, validation, test, artifacts)
     tm.save_model(model, artifacts / "best_model_trained.pkl")
