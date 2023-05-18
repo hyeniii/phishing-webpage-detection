@@ -39,8 +39,8 @@ process_data:
     phishing: 1
   
 generate_features:
-  standardize_prefix: "nb_"
-  standardize_by: "length_url"
+  standardize_prefix: nb_
+  standardize_by: length_url
 
 train_model:
   split:
@@ -57,3 +57,8 @@ train_model:
       max_depth: [3, 5, 7, 9]
       learning_rate: [0.1, 0.03, 0.01]
       n_estimators: [50, 100, 200, 500]
+
+visualize_results:
+  confusion_matrix_filename: confusion_matrix.png
+  classification_report_filename: classification_report.png
+  roc_curve_filename: roc_curve.png
