@@ -59,6 +59,11 @@ if __name__ == "__main__":
     tm.save_split(train, validation, test, artifacts)
     tm.save_model(model, artifacts / "best_model_trained.pkl")
 
+
+
+
+
+
     # Upload all artifacts to S3
     aws_config = config.get("aws")
     if aws_config.get("upload", False):
