@@ -11,6 +11,7 @@ import src.load_data as ld
 import src.process_data as prd
 import src.save_data as sd
 import src.train_model as tm
+import src.visualize_results as vr
 
 logging.config.fileConfig("config/logging/local.conf")
 logger = logging.getLogger("pipeline")
@@ -54,14 +55,15 @@ if __name__ == "__main__":
     df = gf.generate_features(df, config["generate_features"])
     sd.save_data(df, artifacts / "phish_ready.csv")
     
-    # Split data into train/test set and train models based on config; save each to disk
-    rf, train, test = tm.train_model(df, config["train_model"], "RandomForest")
-    xgb = (tm.train_model(df, config["train_model"], "XGBoost"))[0]
-    tm.save_split(train, test, artifacts)
-    tm.save_model(rf, artifacts / "rf_trained.pkl")
-    tm.save_model(xgb, artifacts / "xgb_trained.pkl")
+    # Split data into train/test set and train model based on cross-validation results; save each to disk
+    model, train, validation, test = tm.train_model(df, config["train_model"])
+    tm.save_split(train, validation, test, artifacts)
+    tm.save_model(model, artifacts / "best_model_trained.pkl")
 
-    # Upload all artifacts to S3
+    # Generate model performance metric visualizations on validation and save each to disk
+    vr.visualize_results(model, validation, artifacts, config["visualize_results"])
+
+    # Upload all artifacts to S3 with nested directories
     aws_config = config.get("aws")
     if aws_config.get("upload", False):
         aws.upload_artifacts(artifacts, aws_config)

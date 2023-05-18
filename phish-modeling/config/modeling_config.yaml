@@ -11,6 +11,10 @@ aws:
   bucket_name: phishing-project
   file_key: data/dataset_phishing.csv
   prefix: artifacts/
+  data_prefix: artifacts/data/
+  config_prefix: artifacts/config/
+  model_prefix: artifacts/model/
+  visuals_prefix: artifacts/visuals/
 
 process_data:
   drop_columns:
@@ -39,19 +43,26 @@ process_data:
     phishing: 1
   
 generate_features:
-  standardize_prefix: "nb_"
-  standardize_by: "length_url"
+  standardize_prefix: nb_
+  standardize_by: length_url
 
 train_model:
   split:
     test_size: 0.2
-    random_state: 373
-  RandomForest:
-    n_estimators: 1000
-    min_samples_split: 5
-    max_depth: ~
-    random_state: 373
-  XGBoost:
-    n_estimators: 500
-    learning_rate: 0.1
-    max_depth: 9
+    test_size_validation: 0.1
+    random_state: 42
+    cv: 3
+  grid_search:
+    RandomForest:
+      n_estimators: [50, 100, 500, 1000]
+      max_depth: [1, 3, 5, 10]
+      min_samples_split: [2, 4, 5, 10]
+    XGBoost:
+      max_depth: [3, 5, 7, 9]
+      learning_rate: [0.1, 0.03, 0.01]
+      n_estimators: [50, 100, 200, 500]
+
+visualize_results:
+  confusion_matrix_filename: confusion_matrix.png
+  classification_report_filename: classification_report.png
+  roc_curve_filename: roc_curve.png
