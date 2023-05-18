@@ -1,13 +1,13 @@
 import logging
 import os
-from pathlib import Path
+from pathlib import Path, List
 
 import boto3
 from botocore.exceptions import NoCredentialsError
 
 logger = logging.getLogger(__name__)
 
-def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
+def upload_artifacts(artifacts: Path, config: dict) -> List[str]:
     """Upload all the artifacts in the specified directory to S3.
 
     Args:
