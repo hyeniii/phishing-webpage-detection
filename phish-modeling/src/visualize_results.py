@@ -26,10 +26,6 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         None
     """
     try:
-        # Define directory for visuals
-        visuals_dir = artifacts / "visuals"
-        visuals_dir.mkdir(parents=True, exist_ok=True)
-
         logger.info("Generating predictions on validation data...")
         # Extract features and target
         X = validation.drop("status", axis=1)
@@ -43,7 +39,7 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         fig, ax = plt.subplots()
         sns.heatmap(conf_matrix, annot=True, fmt='d', ax=ax, cmap=plt.cm.Blues, cbar=False)
         ax.set(xlabel="Predicted", ylabel="True", title="Confusion Matrix")
-        plt.savefig(str(visuals_dir / config["confusion_matrix_filename"]))
+        plt.savefig(str(artifacts / config["confusion_matrix_filename"]))
         plt.close()
 
         # Classification report
@@ -58,7 +54,7 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         ax.table(cellText=df_report.values, colLabels=df_report.columns, rowLabels=df_report.index, cellLoc = "center", loc="center")
         ax.set_title("Classification Report")
         fig.tight_layout()
-        fig.savefig(str(visuals_dir / config["classification_report_filename"]))
+        fig.savefig(str(artifacts / config["classification_report_filename"]))
         plt.close()
 
         # ROC curve 
@@ -74,10 +70,10 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         plt.ylabel("True Positive Rate")
         plt.title("ROC Curve")
         plt.legend(loc="lower right")
-        plt.savefig(str(visuals_dir / config["roc_curve_filename"]))
+        plt.savefig(str(artifacts / config["roc_curve_filename"]))
         plt.close()
 
-        logger.info("Successfully generated and saved model all performance visualizations.")
+        logger.info("Successfully generated and saved all model performance visualizations.")
     
     except Exception as e:
         logger.error("Error occurred while generating model performance visualizations. Error: %s", str(e))
