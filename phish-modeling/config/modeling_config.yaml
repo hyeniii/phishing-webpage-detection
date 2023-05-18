@@ -11,6 +11,10 @@ aws:
   bucket_name: phishing-project
   file_key: data/dataset_phishing.csv
   prefix: artifacts/
+  data_prefix: artifacts/data/
+  config_prefix: artifacts/config/
+  model_prefix: artifacts/model/
+  visuals_prefix: artifacts/visuals/
 
 process_data:
   drop_columns:
