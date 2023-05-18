@@ -51,6 +51,7 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         report = classification_report(y_true, y_pred, output_dict=True)
         df_report = pd.DataFrame(report).transpose()
         df_report = df_report.loc[["0", "1"], ["precision", "recall", "f1-score"]]
+        df_report = df_report.round(3)
         fig, ax = plt.subplots()
         ax.axis("tight")
         ax.axis("off")
@@ -65,8 +66,8 @@ def visualize_results(model: Union[RandomForestClassifier, XGBClassifier], valid
         fpr, tpr, _ = roc_curve(y_true, y_score)
         roc_auc = auc(fpr, tpr)
         plt.figure()
-        plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (AUC: %0.2f)' % roc_auc)
-        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.plot(fpr, tpr, color="salmon", lw=2, label='ROC curve (AUC: %0.2f)' % roc_auc)
+        plt.plot([0, 1], [0, 1], color="steelblue", lw=2, linestyle='--')
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
         plt.xlabel("False Positive Rate")
