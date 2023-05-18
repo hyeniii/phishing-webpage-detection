@@ -11,6 +11,7 @@ import src.load_data as ld
 import src.process_data as prd
 import src.save_data as sd
 import src.train_model as tm
+import src.visualize_results as vr
 
 logging.config.fileConfig("config/logging/local.conf")
 logger = logging.getLogger("pipeline")
@@ -59,10 +60,8 @@ if __name__ == "__main__":
     tm.save_split(train, validation, test, artifacts)
     tm.save_model(model, artifacts / "best_model_trained.pkl")
 
-
-
-
-
+    # Generate model performance metric visualizations on validation and save each to disk
+    vr.visualize_results(model, validation, artifacts, config["visualize_results"])
 
     # Upload all artifacts to S3
     aws_config = config.get("aws")
