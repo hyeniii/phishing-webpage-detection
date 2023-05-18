@@ -32,8 +32,8 @@ def train_model(df: pd.DataFrame, config: Dict) -> Tuple[object, pd.DataFrame, p
         df_train, df_temp = train_test_split(df, test_size=config["split"]["test_size"], random_state=config["split"]["random_state"])
         df_validation, df_test = train_test_split(df_temp, test_size=config["split"]["test_size_validation"], random_state=config["split"]["random_state"])
 
-        X_train = df_train.drop("target", axis=1)
-        y_train = df_train["target"]
+        X_train = df_train.drop("status", axis=1)
+        y_train = df_train["status"]
         
         models = [
             ("RandomForest", RandomForestClassifier(), config["grid_search"]["RandomForest"]),
@@ -55,7 +55,7 @@ def train_model(df: pd.DataFrame, config: Dict) -> Tuple[object, pd.DataFrame, p
                 highest_accuracy = grid_search.best_score_
         
         best_model.fit(X_train, y_train)
-        logger.info(f"Best model: {best_model}")
+        logger.info(f"Best model: {type(best_model).__name__}")
 
         return best_model, df_train, df_validation, df_test
 
