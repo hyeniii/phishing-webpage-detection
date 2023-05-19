@@ -1,8 +1,11 @@
 import pandas as pd
+import numpy as np
 import yaml
 from src.feature_extractor import extract_features
 from src.generate_features import generate_features
 from src.load_model import load_model
+from src.load_data import load_data
+
 
 def inference(url: str, config: dict) -> list:
     """
@@ -15,28 +18,43 @@ def inference(url: str, config: dict) -> list:
     Returns:
         int: Prediction result (0 if legitimate, 1 if phishing).
     """
-    # Access variables
-    headers = config['headers']
-    row = extract_features(url)
-
-    # Put headers on the data
-    data = pd.DataFrame([row], columns=headers)
-
-    # Generate new features and drop unwanted features
-    features = generate_features(data, config["generate_features"]).drop(columns=["url", "status"])
-
     # Load model object
     # If need to call random forest, change file-key in config
-    model_trained = load_model(config["aws"])
+    model_trained = load_model(config["aws_model"])
+
+    # Load original data to check if the user provided URL is in our data already
+    urls = load_data(config["aws_full_data"])["url"]
+    # If so, we can skip the feature generation steps and just pull the features from S3
+    if np.isin(url, urls):
+        print("Found this url in dataset. Using existing features to fit model.")
+        # Get the cleaned and processed data
+        phish_ready_features = load_data(config["aws_features"])
+        # Match by the index
+        match_index = np.where(urls == url)[0]
+        # Grab the features
+        features = phish_ready_features.iloc[match_index].drop(columns=["status"])
+    else:
+        print("Didn't find this url in dataset. Generating features....")
+        # Access variables
+        headers = config['headers']
+        row = extract_features(url)
+
+        # Put headers on the data
+        data = pd.DataFrame([row], columns=headers)
+
+        # Generate new features and drop unwanted features
+        features = generate_features(data, config["generate_features"]).drop(columns=["url", "status"])
+        print("Features generated. Running best model trained....")
 
     return model_trained.predict(features)
+
 
 def main():
     """
     Main entry point of the script.
     """
     # Load config file
-    with open('./phish-inference/src/config.yaml', 'r') as f:
+    with open('./phish-inference/config/inference_config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
     input_url = config["url"]
@@ -46,6 +64,7 @@ def main():
 
     # Print the result
     print(result)
+
 
 if __name__ == '__main__':
     main()
