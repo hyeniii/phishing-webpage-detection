@@ -1,5 +1,7 @@
 import pandas as pd
 import yaml
+import json
+
 from src.feature_extractor import extract_features
 from src.generate_features import generate_features
 from src.load_model import load_model
@@ -30,8 +32,13 @@ def lambda_handler(event, context):
     # Get the URL from the event
     url = event['url']
 
+    result = inference(url, CONFIG)
+
     # Perform the inference
-    return inference(url, CONFIG)
+    return {
+        'statusCode': 200,
+        'body': json.dumps(result)
+    }
 
 def inference(url: str, config: dict) -> list:
     """
