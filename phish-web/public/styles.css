@@ -1,57 +1,109 @@
 body {
-    background: #F5F5F5;
-    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
-    padding: 0 16px;
-  }
+  background: #F5F5F5;
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+  padding: 0 16px;
+}
 
 html {
-    font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 footer {
-    display:flex;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;
-  }
-  
-  footer p {
-    color: #757474;
-  }
+  display:flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+}
+
+footer p {
+  color: #757474;
+}
 
 .MuiAppBar-root.appbar {
-    background-color: #333333;
+  background-color: #333333;
 }
 
 .typography-h6 {
-    font-family: monospace;
-    letter-spacing: 0.3rem;
-    text-decoration: none;
-    color: inherit;
-    white-space: nowrap;
-    margin-right: 16px;
-  }
-  
-  .typography-h5 {
-    font-family: monospace;
-    flex-grow: 1;
-    font-weight: 700;
-    letter-spacing: .3rem;
-    color: inherit;
-    text-decoration: none;
-  }
+  font-family: monospace;
+  letter-spacing: 0.3rem;
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;
+  margin-right: 16px;
+}
 
-  .main-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-  }
+.typography-h5 {
+  font-family: monospace;
+  flex-grow: 1;
+  font-weight: 700;
+  letter-spacing: .3rem;
+  color: inherit;
+  text-decoration: none;
+}
 
-  .MuiButton-root.main-button {
-    background-color: #333333;
-    size: large;
-  }
+.main-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.MuiButton-root.main-button {
+  background-color: #333333;
+  size: large;
+}
+
+/* Phish.css */
+
+.phish {
+text-align: center; /* Center aligns all text within the .phish div */
+}
+
+.alert-title {
+font-size: 2em; /* Adjust as needed */
+}
+
+.alert-text {
+font-size: 1.5em; /* Adjust as needed */
+}
+
+.alarm-animation {
+font-size: 50px;
+animation: flash 1s infinite;
+}
+
+@keyframes flash {
+0%, 100% { opacity: 1; }
+50% { opacity: 0; }
+}
+
+/* Safe.css */
+
+.safe {
+text-align: center;
+color: green; /* Optional, makes text green */
+}
+
+.safe-title {
+font-size: 2em;
+}
+
+.safe-text {
+font-size: 1.5em;
+}
+
+.safe-icon {
+font-size: 50px;
+}
+
+.safe-text a {
+color: inherit;
+text-decoration: none;
+}
+
+.safe-text a:hover {
+text-decoration: underline;
+}
