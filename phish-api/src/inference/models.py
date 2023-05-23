@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
 import yaml
-from src.feature_extractor import extract_features
-from src.generate_features import generate_features
-from src.load_model import load_model
-from src.load_data import load_data
+from src.preprocessing.feature_extractor import extract_features
+from src.preprocessing.generate_features import generate_features
+from src.preprocessing.load_model import load_model
+from src.preprocessing.load_data import load_data
 
 
-def inference(url: str, config: dict) -> list:
+def url_inference(url: str, config: dict) -> list:
     """
     Perform inference on the given URL using the provided configuration.
 
@@ -20,7 +20,7 @@ def inference(url: str, config: dict) -> list:
     """
     # Load model object
     # If need to call random forest, change file-key in config
-    model_trained = load_model(config["aws_model"])
+    model_trained = load_model(tuple(config["aws_model"].items()))
 
     # Load original data to check if the user provided URL is in our data already
     urls = load_data(config["aws_full_data"])["url"]
@@ -49,22 +49,13 @@ def inference(url: str, config: dict) -> list:
     return model_trained.predict(features)
 
 
-def main():
-    """
-    Main entry point of the script.
-    """
-    # Load config file
-    with open('./phish-inference/config/inference_config.yaml', 'r') as f:
+def predict_and_save(url: str):
+    with open('config/inference_config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
-    input_url = config["url"]
-
+    input_url = url
     # Call the inference function
-    result = inference(input_url, config)
+    pred = url_inference(input_url, config)
+    print(pred)
 
-    # Print the result
-    print(result)
-
-
-if __name__ == '__main__':
-    main()
+    return pred[0]

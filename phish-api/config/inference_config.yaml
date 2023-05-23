@@ -1,4 +1,5 @@
 url: https://www.chiefarchitect.com/
+#url: https://www.facebook.com/
 
 headers:
   - 'url'
@@ -88,7 +89,14 @@ generate_features:
   standardize_prefix: "nb_"
   standardize_by: "length_url"
 
-aws:
+aws_model:
   bucket_name: phishing-project
-  file_key: artifacts/xgb_trained.pkl
-  prefix: artifacts/
+  file_key: artifacts/model/best_model_trained.pkl
+
+aws_features:
+  bucket_name: phishing-project
+  file_key: artifacts/data/phish_ready.csv
+
+aws_full_data:
+  bucket_name: phishing-project
+  file_key: data/dataset_phishing.csv
