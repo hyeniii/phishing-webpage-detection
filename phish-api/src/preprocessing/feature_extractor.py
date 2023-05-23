@@ -39,6 +39,7 @@ def is_URL_accessible(url):
     if page and page.status_code == 200 and page.content not in ["b''", "b' '"]:
         return True, url, page
     else:
+        print("is_URL_accessible is the break point.")
         return False, None, None
 
 def get_domain(url):
@@ -56,6 +57,7 @@ def getPageContent(url):
             url = parsed.scheme+'://www.'+parsed.netloc
             page = requests.get(url)
     if page.status_code != 200:
+        print("page.status_code != 200")
         return None, None
     else:    
         return url, page.content
@@ -428,4 +430,5 @@ def extract_features(url, status=None):
                status]
         #print(row)
         return row
+    print("state not turned on")
     return None
