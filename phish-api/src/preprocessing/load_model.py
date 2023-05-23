@@ -3,10 +3,12 @@ from typing import Dict, Any
 
 import boto3
 import pickle
+from functools import lru_cache
 
 logger = logging.getLogger(__name__)
 
-def load_model(config: Dict[str, str]) -> Any:
+@lru_cache()
+def load_model(config: tuple[str, str]) -> Any:
     """
     Function to load a pickled object from an AWS S3 bucket.
     
@@ -18,16 +20,15 @@ def load_model(config: Dict[str, str]) -> Any:
         Any: The unpickled object loaded from the specified file in the S3 bucket.
     """
     # Validate the keys in config
-    if not all(key in config for key in ["bucket_name", "file_key"]):
-        logger.error("The config dictionary must contain \"bucket_name\" and \"file_key\".")
-        raise ValueError("The config dictionary must contain \"bucket_name\" and \"file_key\".")
+    if not all(key == "bucket_name" or key == "file_key" for key, _ in config):
+        logger.error("The config tuple must contain (\"bucket_name\", \"file_key\").")
+        raise ValueError("The config tuple must contain (\"bucket_name\", \"file_key\").")
     
+    bucket_name = next(value for key, value in config if key == "bucket_name")
+    file_key = next(value for key, value in config if key == "file_key")
     # Assuming the AWS SSO profile is correctly configured on the machine
     # The S3 client will automatically use the credentials provided by AWS SSO
     s3_client = boto3.client("s3")
-
-    bucket_name = config["bucket_name"]
-    file_key = config["file_key"]
 
     try:
         obj = s3_client.get_object(Bucket=bucket_name, Key=file_key)

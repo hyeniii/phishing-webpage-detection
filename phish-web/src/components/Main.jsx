@@ -1,39 +1,45 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 
 function Main() {
-  // url used for phishing
   const [url, setUrl] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
-  function handleChange(event){
-    // textfield value
+  const handleChange = (event) => {
     setUrl(event.target.value);
-  }
-  async function handleClick() {
-    // url passed as data when button is clicked
-    const urlJson = { url: url };
-    const urlJsonString = encodeURIComponent(JSON.stringify(urlJson));
+  };
 
+  const handleClick = async () => {
+    const urlJson = { url: url };
     try {
-      const response = await fetch("https://d4a7leuot6.execute-api.us-east-2.amazonaws.com/default/phish-inference", {
+      setLoading(true);
+      const response = await fetch("http://127.0.0.1:8000/predict", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-      body: JSON.stringify(urlJson),
+        body: JSON.stringify(urlJson),
       });
       if (response.ok) {
-        const data = await response.json();
-        navigate(`/predict?data=${data}`, {state: {predictionData: data}});
+        const predictionData = await response.json();
+        console.log(predictionData)
+        navigate('/predict', { state: { predictionData } });
+      } else if (response.status === 405) {
+        console.error("Method Not Allowed:", response.status);
+        // Handle the Method Not Allowed error appropriately
       } else {
-        console.error("Error while fetching predition:", response.status)
-        navigate(`/`);
+        console.error("Error while fetching prediction:", response.status);
+        navigate('/');
       }
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error while fetching prediction:", error);
+      navigate('/');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,11 +54,13 @@ function Main() {
         fullWidth
         style={{ marginBottom: '1rem' }}
       />
-      <Button 
-        variant="contained" 
+      <Button
+        variant="contained"
         className='main-button'
-        onClick={handleClick}>
-        Predict
+        onClick={handleClick}
+        disabled={loading}
+      >
+        {loading ? <CircularProgress size={24} color="inherit" /> : 'Predict'}
       </Button>
     </div>
   );
