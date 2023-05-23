@@ -4,4 +4,4 @@ class UrlInput(BaseModel):
     url: str
 
 class Prediction(BaseModel):
-    prediction: str
+    prediction: int

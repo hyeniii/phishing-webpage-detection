@@ -20,7 +20,7 @@ def url_inference(url: str, config: dict) -> list:
     """
     # Load model object
     # If need to call random forest, change file-key in config
-    model_trained = load_model(config["aws_model"])
+    model_trained = load_model(tuple(config["aws_model"].items()))
 
     # Load original data to check if the user provided URL is in our data already
     urls = load_data(config["aws_full_data"])["url"]
@@ -54,8 +54,8 @@ def predict_and_save(url: str):
         config = yaml.safe_load(f)
 
     input_url = url
-
     # Call the inference function
     pred = url_inference(input_url, config)
+    print(pred)
 
-    return pred
+    return pred[0]
