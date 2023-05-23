@@ -36,7 +36,7 @@ def is_URL_accessible(url):
                 page = None
                 pass
 
-    if page and page.status_code == 200 and page.content not in ["b''", "b' '"]:
+    if page and page.status_code == 200 or page.status_code == 999 and page.content not in ["b''", "b' '"]:
         return True, url, page
     else:
         print("is_URL_accessible is the break point.")
