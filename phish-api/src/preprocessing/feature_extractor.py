@@ -428,7 +428,7 @@ def extract_features(url, status=None):
                  
                # status
                status]
-        #print(row)
+        print(row)
         return row
     print("state not turned on")
     return None
