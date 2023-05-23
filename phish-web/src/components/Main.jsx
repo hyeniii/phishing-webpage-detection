@@ -27,7 +27,7 @@ function Main() {
       if (response.ok) {
         const predictionData = await response.json();
         console.log(predictionData)
-        navigate('/predict', { state: { predictionData } });
+        navigate('/predict', { state: { predictionData, url:urlJson.url } });
       } else if (response.status === 405) {
         console.error("Method Not Allowed:", response.status);
         // Handle the Method Not Allowed error appropriately
