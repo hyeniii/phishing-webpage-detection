@@ -17,7 +17,7 @@ function Main() {
     setLoading(true);
     const urlJson = { url: url };
     try {
-      const response = await fetch("http://127.0.0.1:8000/predict", {
+      const response = await fetch("http://phish-balancer-660853376.us-east-2.elb.amazonaws.com/predict", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
