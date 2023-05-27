@@ -1,0 +1,20 @@
+FROM python:3.9-slim 
+# platform=linux/x86_64
+
+WORKDIR /app
+
+# Update packages and install git gcc(for pickle)
+RUN apt-get update && apt-get install -y git gcc
+
+# install dependencies
+COPY requirements.txt .
+
+RUN pip install --upgrade pip
+
+RUN pip install -r requirements.txt
+
+COPY . /app
+
+EXPOSE 80
+
+CMD ["uvicorn", "main:app", "--port", "80", "--host", "0.0.0.0"]
