@@ -17,8 +17,8 @@ function Main() {
     setLoading(true);
     const urlJson = { url: url };
     try {
-      const response = await fetch("http://phish-balancer-660853376.us-east-2.elb.amazonaws.com/predict", {
-        method: 'POST',
+      const response = await fetch("http://phish-balancer-api-1322663159.us-east-2.elb.amazonaws.com/predict", {
+        method: 'POST', 
         headers: {
           'Content-Type': 'application/json'
         },
@@ -33,6 +33,7 @@ function Main() {
         // Handle the Method Not Allowed error appropriately
       } else {
         console.error("Error while fetching prediction:", response.status);
+        console.error(response.body);
         navigate('/');
       }
     } catch (error) {

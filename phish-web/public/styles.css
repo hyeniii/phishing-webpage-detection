@@ -107,3 +107,18 @@ text-decoration: none;
 .safe-text a:hover {
 text-decoration: underline;
 }
+
+/* Dashboard */
+
+.carousel-image {
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px; /* adjust as needed */
+  background: transparent;
+}
