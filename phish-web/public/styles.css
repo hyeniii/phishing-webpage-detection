@@ -122,3 +122,11 @@ text-decoration: underline;
   height: 600px; /* adjust as needed */
   background: transparent;
 }
+
+.logo-img{
+  width: 35%;
+  height: 95%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

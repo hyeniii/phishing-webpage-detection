@@ -46,6 +46,7 @@ function Main() {
 
   return (
     <div className='main-div'>
+      <img className="logo-img" src="assets/images/phish-logo.png" alt="Website Logo"/>
       <TextField
         label="Enter URL"
         variant="filled"
